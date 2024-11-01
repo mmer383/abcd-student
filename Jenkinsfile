@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    git credentialsId: 'GitHub PAT', url: 'https://github.com/mmer383/abcd-student', branch: 'main'
+                    git credentialsId: 'github-token', url: 'https://github.com/mmer383/abcd-student', branch: 'main'
                 }
             }
         }
