@@ -14,9 +14,7 @@ pipeline {
         }
         stage('osv-scanner') {
             steps {
-                script {
-                    osv-scanner scan --lockfile package-lock.json --json --output /var/jenkins_home/workspace/ABCD pipeine/results/osv-report.json                
-                }
+                sh osv-scanner scan --lockfile package-lock.json --json --output /var/jenkins_home/workspace/ABCD pipeine/results/osv-report.json                
             }
         }
     }
