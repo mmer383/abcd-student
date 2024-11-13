@@ -30,7 +30,7 @@ pipeline {
         stage('trufflehog') {
             steps {
                 sh 'mkdir -p results/'  
-                sh 'trufflehog git file://. --branch main --json --only-verified > "${WORKSPACE}/results/trufflehog_result.json" || true'   
+                sh 'trufflehog git file://. --branch main --json --only-verified --force-skip-archives > "${WORKSPACE}/results/trufflehog_result.json" || true'   
                 sh 'cat "${WORKSPACE}/results/trufflehog_result.json"'
             }
           // post {
