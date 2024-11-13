@@ -14,8 +14,16 @@ pipeline {
         }
         stage('osv-scanner') {
             steps {
-                sh 'osv-scanner scan --lockfile package-lock.json --json --output "/var/jenkins_home/workspace/ABCD pipeline/results/osv-report.json" || true'               
+                sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'               
             }
         }
+      #  post {
+       #     always {
+        #        defectDojoPublisher(artifact: 'results/sca-osv-scanner.json', 
+       #             productName: 'Juice Shop', 
+      #              scanType: 'OSV Scan', 
+      #              engagementName: 'marcin.mazurek@merito.pl')
+       #     }
+     #   }
     }
 }
