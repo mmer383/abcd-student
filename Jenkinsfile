@@ -18,14 +18,14 @@ pipeline {
                 sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'   
                 sh 'cat "${WORKSPACE}/results/osv-report.json"'
             }
-        }
-        post {
-           always {
+           post {
+               always {
                 defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
                     productName: 'Juice Shop', 
                     scanType: 'OSV Scan', 
                     engagementName: 'marcin.mazurek@merito.pl')
-           }
+               }
+            }
         }
     }
 }
