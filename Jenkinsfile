@@ -12,20 +12,35 @@ pipeline {
                 }
             }
         }
-        stage('osv-scanner') {
+      //  stage('osv-scanner') {
+      //      steps {
+      //          sh 'mkdir -p results/'  
+     //           sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'   
+     //           sh 'cat "${WORKSPACE}/results/osv-report.json"'
+    //        }
+         //  post {
+           //    always {
+             //   defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
+               //     productName: 'Juice Shop', 
+                 //   scanType: 'OSV Scan', 
+                   // engagementName: 'marcin.mazurek@merito.pl')
+              // }
+           // }
+        }
+        stage('trufflehog') {
             steps {
                 sh 'mkdir -p results/'  
-                sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'   
-                sh 'cat "${WORKSPACE}/results/osv-report.json"'
+                sh 'trufflehog git file://. --since-commit master --json --only-verified > "${WORKSPACE}/results/trufflehog_result.json" || true'   
+                sh 'cat "${WORKSPACE}/results/trufflehog_result.json"'
             }
-           post {
-               always {
-                defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
-                    productName: 'Juice Shop', 
-                    scanType: 'OSV Scan', 
-                    engagementName: 'marcin.mazurek@merito.pl')
-               }
-            }
+          // post {
+          //     always {
+          //      defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
+          //          productName: 'Juice Shop', 
+          //          scanType: 'OSV Scan', 
+          //          engagementName: 'marcin.mazurek@merito.pl')
+          //     }
+          //  }
         }
     }
 }
