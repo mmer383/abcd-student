@@ -26,7 +26,7 @@ pipeline {
                    // engagementName: 'marcin.mazurek@merito.pl')
               // }
            // }
-        }
+        //}
         stage('trufflehog') {
             steps {
                 sh 'mkdir -p results/'  
