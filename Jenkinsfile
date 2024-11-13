@@ -19,6 +19,13 @@ pipeline {
                 sh 'cat "${WORKSPACE}/results/osv-report.json"'
             }
         }
-
+        post {
+           always {
+                defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'OSV Scan', 
+                    engagementName: 'marcin.mazurek@merito.pl')
+           }
+        }
     }
 }
