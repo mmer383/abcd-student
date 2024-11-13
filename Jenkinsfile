@@ -34,14 +34,14 @@ pipeline {
                 sh 'trufflehog git file://. --branch main --json --force-skip-archives > "${WORKSPACE}/results/trufflehog_result.json" || true'
                 sh 'cat "${WORKSPACE}/results/trufflehog_result.json"'
             }
-          // post {
-          //     always {
-          //      defectDojoPublisher(artifact: '${WORKSPACE}/results/osv-report.json', 
-          //          productName: 'Juice Shop', 
-          //          scanType: 'OSV Scan', 
-          //          engagementName: 'marcin.mazurek@merito.pl')
-          //     }
-          //  }
+            post {
+               always {
+                defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Trufflehog Scan', 
+                    engagementName: 'marcin.mazurek@merito.pl')
+               }
+           }
         }
     }
 }
