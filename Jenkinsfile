@@ -15,7 +15,8 @@ pipeline {
         stage('osv-scanner') {
             steps {
                 sh 'mkdir -p results/'  
-                sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'               
+                sh 'osv-scanner scan --lockfile package-lock.json --json --output results/osv-report.json || true'   
+                cat "${WORKSPACE}/results/sca-osv-scanner.json"
             }
         }
 
