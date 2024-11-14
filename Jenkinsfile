@@ -43,20 +43,35 @@ pipeline {
           //     }
           // }
         //}
-          stage('semgrep') {
+  //        stage('semgrep') {
+  //          steps {
+  //              sh 'mkdir -p results/'  
+  //              sh 'semgrep --config auto --json --output "${WORKSPACE}/results/semgrep_result.json" || true'
+  //              sh 'cat "${WORKSPACE}/results/semgrep_result.json"'
+  //          }
+  //          post {
+   //            always {
+  //             defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
+   //                 productName: 'Juice Shop', 
+  //                  scanType: 'Semgrep JSON Report', 
+  //                  engagementName: 'marcin.mazurek@merito.pl')
+  //             }
+  //         }
+  //      }
+                  stage('zap scan') {
             steps {
                 sh 'mkdir -p results/'  
                 sh 'semgrep --config auto --json --output "${WORKSPACE}/results/semgrep_result.json" || true'
                 sh 'cat "${WORKSPACE}/results/semgrep_result.json"'
             }
-            post {
-               always {
-               defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
-                    productName: 'Juice Shop', 
-                    scanType: 'Semgrep JSON Report', 
-                    engagementName: 'marcin.mazurek@merito.pl')
-               }
-           }
+     //       post {
+    //           always {
+    //           defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
+     //               productName: 'Juice Shop', 
+    //                scanType: 'ZAP Scan', 
+    //                engagementName: 'marcin.mazurek@merito.pl')
+    //           }
+    //       }
         }
     }
 }
