@@ -46,15 +46,14 @@ pipeline {
           stage('semgrep') {
             steps {
                 sh 'mkdir -p results/'  
-                // sh 'trufflehog git file://. --branch main --json --only-verified --force-skip-archives > "${WORKSPACE}/results/trufflehog_result.json" || true'
-                sh 'trufflehog git file://. --branch main --json --force-skip-archives > "${WORKSPACE}/results/trufflehog_result.json" || true'
-                sh 'cat "${WORKSPACE}/results/trufflehog_result.json"'
+                sh 'semgrep --config auto --output "${WORKSPACE}/results/semgrep_result.json" || true'
+                sh 'cat "${WORKSPACE}/results/semgrep_result.json"'
             }
           //  post {
           //     always {
-          //     defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
+          //     defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
           //          productName: 'Juice Shop', 
-          //          scanType: 'Trufflehog Scan', 
+          //          scanType: 'Semgrep JSON Report', 
           //          engagementName: 'marcin.mazurek@merito.pl')
           //     }
            }
