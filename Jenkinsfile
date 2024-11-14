@@ -46,7 +46,7 @@ pipeline {
           stage('semgrep') {
             steps {
                 sh 'mkdir -p results/'  
-                sh 'semgrep --config auto --output "${WORKSPACE}/results/semgrep_result.json" || true'
+                sh 'semgrep --config auto --json --output "${WORKSPACE}/results/semgrep_result.json" || true'
                 sh 'cat "${WORKSPACE}/results/semgrep_result.json"'
             }
           //  post {
@@ -56,7 +56,7 @@ pipeline {
           //          scanType: 'Semgrep JSON Report', 
           //          engagementName: 'marcin.mazurek@merito.pl')
           //     }
-           }
+          // }
         }
     }
-//}
+}
