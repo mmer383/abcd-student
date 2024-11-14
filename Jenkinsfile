@@ -49,14 +49,14 @@ pipeline {
                 sh 'semgrep --config auto --json --output "${WORKSPACE}/results/semgrep_result.json" || true'
                 sh 'cat "${WORKSPACE}/results/semgrep_result.json"'
             }
-          //  post {
-          //     always {
-          //     defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
-          //          productName: 'Juice Shop', 
-          //          scanType: 'Semgrep JSON Report', 
-          //          engagementName: 'marcin.mazurek@merito.pl')
-          //     }
-          // }
+            post {
+               always {
+               defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_result.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Semgrep JSON Report', 
+                    engagementName: 'marcin.mazurek@merito.pl')
+               }
+           }
         }
     }
 }
