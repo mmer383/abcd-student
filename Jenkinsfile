@@ -81,6 +81,11 @@ pipeline {
                     docker stop zap juice-shop || true
                     docker rm zap
                     '''
+                    archiveArtifacts artifacts: "results/zap_html_report.html", allowEmptyArchive: true
+                    defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
+                    productName: 'Juice Shop', 
+                    scanType: 'ZAP Scan', 
+                    engagementName: 'marcin.mazurek@merito.pl')
                 }
                 failure {
                     sh '''
